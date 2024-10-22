@@ -60,4 +60,12 @@ public class TripServiceImpl implements TripService {
 
         return TripResponse.from(savedTrip);
     }
+
+    @Override
+    public void deleteTrip(Long tripId) {
+        if (!tripRepository.existsById(tripId)) {
+            throw new TripNotFoundException("Trip not found with id: " + tripId);
+        }
+        tripRepository.deleteById(tripId);
+    }
 }

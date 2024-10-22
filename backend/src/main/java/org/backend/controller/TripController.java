@@ -32,5 +32,11 @@ public class TripController {
         return new ResponseEntity<>(tripResponse, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTrip(@PathVariable Long id) {
+        tripService.deleteTrip(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 
 }
