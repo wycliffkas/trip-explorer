@@ -1,9 +1,3 @@
-POST http://localhost:8080/api/v1/trips
+GET http://localhost:8080/api/v1/trips/5
 Content-Type: application/json
 
-{
-  "country": "USA",
-  "airport": "Chicago",
-  "hotel": "Marion Hotel",
-  "gallery": []
-}

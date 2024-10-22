@@ -21,8 +21,8 @@ public class TripController {
         return new ResponseEntity<>(tripResponseList, HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getTripById(@PathVariable Long tripId){
-        TripResponse tripResponse = tripService.findById(tripId);
+    public ResponseEntity<?> getTripById(@PathVariable Long id){
+        TripResponse tripResponse = tripService.findById(id);
         return new ResponseEntity<>(tripResponse, HttpStatus.OK);
     }
 
