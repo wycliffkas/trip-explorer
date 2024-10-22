@@ -1,4 +1,4 @@
-package org.billy.backend.domain;
+package org.backend.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class Trip {
     private String country;
     private String airport;
     private String hotel;
-    @OneToMany(mappedBy = "trip")
-    private List<Gallery> gallery;
 
+    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Gallery> gallery = new ArrayList<>();
 }

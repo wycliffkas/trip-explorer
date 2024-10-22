@@ -1,7 +1,7 @@
-package org.billy.backend.service;
+package org.backend.service;
 
-import org.billy.backend.dto.request.CreateTripRequest;
-import org.billy.backend.dto.response.TripResponse;
+import org.backend.dto.request.CreateTripRequest;
+import org.backend.dto.response.TripResponse;
 
 import java.util.List;
 
@@ -11,4 +11,6 @@ public interface TripService {
     TripResponse findById(Long tripId);
 
     TripResponse createTrip(CreateTripRequest tripRequest);
+
+    void deleteTrip(Long tripId);
 }
