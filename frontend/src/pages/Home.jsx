@@ -11,10 +11,19 @@ const Home = () => {
   useEffect(() => {
     const getTrips = async () => {
       setIsLoading(true);
-      const response = await fetch("http://localhost:4000/trips");
-      const trips = await response.json();
-      setTrips(trips.data);
-      setIsLoading(false);
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/trips");
+        if (response.ok) {
+          const tripsData = await response.json();
+          setTrips(tripsData); 
+        } else {
+          console.error("Failed to fetch trips");
+        }
+      } catch (error) {
+        console.error("Error fetching trips:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     getTrips();
@@ -24,13 +33,13 @@ const Home = () => {
     navigate(`/trip/${tripId}`);
   };
 
-  if (isLoading) <div>Loading trips...</div>;
+  if (isLoading) return <div>Loading trips...</div>;
 
   return (
     <Box display="flex" flexWrap="wrap" gap={3} m={3} className="container">
       {trips.map((trip) => (
         <Box key={trip.id} onClick={() => handleCardClick(trip.id)}>
-          <Card country={trip?.country} gallery={trip?.gallery} />
+          <Card country={trip.country} galleryImages={trip.galleryImages} />
         </Box>
       ))}
     </Box>
