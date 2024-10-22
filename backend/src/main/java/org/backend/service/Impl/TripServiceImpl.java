@@ -1,42 +1,63 @@
 package org.backend.service.Impl;
 
+import lombok.RequiredArgsConstructor;
 import org.backend.Exceptions.TripNotFoundException;
-import org.backend.repository.TripRepository;
-import org.backend.service.TripService;
+import org.backend.domain.Gallery;
 import org.backend.domain.Trip;
 import org.backend.dto.request.CreateTripRequest;
 import org.backend.dto.response.TripResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.backend.repository.TripRepository;
+import org.backend.service.TripService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TripServiceImpl implements TripService {
-    @Autowired
-    private TripRepository tripRepository;
+
+    private final TripRepository tripRepository;
+
     @Override
     public List<TripResponse> findAll() {
-        return tripRepository.findAll()
-                .stream()
-                .map(TripResponse::from)
-                .toList();
+        List<Trip> trips = tripRepository.findAll();
+        List<TripResponse> tripResponses = new ArrayList<>();
+        for (Trip trip : trips) {
+            tripResponses.add(TripResponse.from(trip));
+        }
+        return tripResponses;
     }
 
     @Override
     public TripResponse findById(Long tripId) {
-        Trip trip = tripRepository.findById(tripId).orElseThrow(()-> new TripNotFoundException(String.format("Trip with that id not found")));
+        Trip trip = tripRepository.findById(tripId)
+                .orElseThrow(() -> new TripNotFoundException("Trip not found with id: " + tripId));
         return TripResponse.from(trip);
     }
 
     @Override
     public TripResponse createTrip(CreateTripRequest tripRequest) {
         Trip trip = new Trip();
-        trip.setHotel(tripRequest.getHotel());
-        trip.setGallery(tripRequest.getGallery());
         trip.setCountry(tripRequest.getCountry());
         trip.setAirport(tripRequest.getAirport());
-        trip = tripRepository.save(trip);
-        return TripResponse.from(trip);
+        trip.setHotel(tripRequest.getHotel());
+
+        List<Gallery> galleries = new ArrayList<>();
+        if (tripRequest.getGalleryImages() != null) {
+            for (String imageUrl : tripRequest.getGalleryImages()) {
+                if (!imageUrl.isEmpty()) {
+                    Gallery gallery = new Gallery();
+                    gallery.setUrl(imageUrl);
+                    gallery.setTrip(trip); // Set the trip
+                    galleries.add(gallery);
+                }
+            }
+        }
+        trip.setGallery(galleries);
+
+        Trip savedTrip = tripRepository.save(trip);
+
+        return TripResponse.from(savedTrip);
     }
 }

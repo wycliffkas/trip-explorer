@@ -11,6 +11,7 @@ import {
 
 const countries = [
   "Austria",
+  "Brazil",
   "Belgium",
   "Czech Republic",
   "Denmark",
@@ -31,6 +32,7 @@ const AddTrip = () => {
   const [country, setCountry] = useState("");
   const [airport, setAirport] = useState("");
   const [hotel, setHotel] = useState("");
+  const [galleryImages, setGalleryImages] = useState(""); 
   const [message, setMessage] = useState("");
 
   const handleCountryChange = (e) => {
@@ -40,32 +42,45 @@ const AddTrip = () => {
 
   const handleAddTrip = async (e) => {
     e.preventDefault();
-
+  
+    const galleryImageUrls = galleryImages
+      .split(",")
+      .map((url) => url.trim())
+      .filter((url) => url);
+  
     const tripData = {
       country,
       airport,
-      hotel
+      hotel,
+      galleryImages: galleryImageUrls
     };
-
-    const response = await fetch("http://localhost:4000/trips", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(tripData)
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      setMessage("Trip added successfully");
-      setCountry("");
-      setAirport("");
-      setHotel("");
-    } else {
-      setMessage(data.message || "Failed to add trip");
+  
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/trips", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(tripData)
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        setMessage("Trip added successfully");
+        setCountry("");
+        setAirport("");
+        setHotel("");
+        setGalleryImages("");
+      } else {
+        const errorData = await response.json();
+        setMessage(errorData.message || "Failed to add trip");
+      }
+    } catch (error) {
+      console.error("Error during fetch:", error);
+      setMessage("Network error: Failed to add trip");
     }
   };
+  
 
   return (
     <div className="container">
@@ -108,6 +123,14 @@ const AddTrip = () => {
                 onChange={(e) => setHotel(e.target.value)}
                 fullWidth
                 required
+              />
+            </Box>
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                label="Gallery Images (URLs separated by commas)"
+                value={galleryImages}
+                onChange={(e) => setGalleryImages(e.target.value)}
+                fullWidth
               />
             </Box>
 

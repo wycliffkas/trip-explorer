@@ -1,11 +1,10 @@
 package org.backend.dto.response;
 
-import jakarta.persistence.OneToMany;
 import lombok.Data;
-import org.backend.domain.Gallery;
 import org.backend.domain.Trip;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class TripResponse {
@@ -13,8 +12,7 @@ public class TripResponse {
     private String country;
     private String airport;
     private String hotel;
-    @OneToMany(mappedBy = "gallery")
-    private List<Gallery> gallery;
+    private List<String> galleryImages;
 
     public static TripResponse from(Trip trip){
         TripResponse tripResponse = new TripResponse();
@@ -22,7 +20,13 @@ public class TripResponse {
         tripResponse.airport=trip.getAirport();
         tripResponse.country= trip.getCountry();
         tripResponse.hotel = trip.getHotel();
-        tripResponse.gallery = trip.getGallery();
+
+        if (trip.getGallery() != null) {
+            tripResponse.galleryImages = trip.getGallery().stream()
+                    .map(gallery -> gallery.getUrl())
+                    .collect(Collectors.toList());
+        }
+
         return tripResponse;
     }
 }
