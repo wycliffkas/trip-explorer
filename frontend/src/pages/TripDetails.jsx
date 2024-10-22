@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import "./TripDetails.css";
 import defaultImage from "../images/default.png";
@@ -11,11 +11,6 @@ const TripDetails = ({ isLoggedIn }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigate("/login");
-      return;
-    }
-
     const getTrip = async () => {
       setIsLoading(true);
       try {
@@ -34,7 +29,7 @@ const TripDetails = ({ isLoggedIn }) => {
     };
 
     getTrip();
-  }, [tripId, isLoggedIn, navigate]);
+  }, [tripId]);
 
   const imageUrl =
     trip?.galleryImages?.length > 0 ? trip.galleryImages[0] : defaultImage;
@@ -87,40 +82,16 @@ const TripDetails = ({ isLoggedIn }) => {
           </p>
 
           {isLoggedIn && (
-            <>
-              <div style={{ display: 'flex', gap: '16px' }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  component={Link}
-                  to={`/edit-trip/${tripId}`}
-                  sx={{ mt: 2 }}
-                >
-                  Edit Trip
-                </Button>
-
-                <Button
-                  variant="contained"
-                  color="primary"
-                  component={Link}
-                  to={`/add-gallery/${tripId}`}
-                  sx={{ mt: 2 }}
-                >
-                  Add Gallery
-                </Button>
-              </div>
-
-              <div style={{ marginTop: '16px' }}>
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={handleDeleteTrip}
-                  sx={{ mt: 2 }}
-                >
-                  Delete Trip
-                </Button>
-              </div>
-            </>
+            <div style={{ marginTop: '16px' }}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={handleDeleteTrip}
+                sx={{ mt: 2 }}
+              >
+                Delete Trip
+              </Button>
+            </div>
           )}
         </div>
       </div>
