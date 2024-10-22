@@ -16,7 +16,7 @@ public class TripResponse {
     @OneToMany(mappedBy = "gallery")
     private List<Gallery> gallery;
 
-    private static TripResponse from(Trip trip){
+    public static TripResponse from(Trip trip){
         TripResponse tripResponse = new TripResponse();
         tripResponse.id= trip.getId();
         tripResponse.airport=trip.getAirport();
