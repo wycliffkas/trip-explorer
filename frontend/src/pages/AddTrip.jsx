@@ -41,46 +41,46 @@ const AddTrip = () => {
   };
 
   const handleAddTrip = async (e) => {
-    e.preventDefault();
-  
-    const galleryImageUrls = galleryImages
-      .split(",")
-      .map((url) => url.trim())
-      .filter((url) => url);
-  
-    const tripData = {
-      country,
-      airport,
-      hotel,
-      galleryImages: galleryImageUrls
-    };
-  
-    try {
-      const response = await fetch("http://localhost:8080/api/v1/trips", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(tripData)
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        setMessage("Trip added successfully");
-        setCountry("");
-        setAirport("");
-        setHotel("");
-        setGalleryImages("");
-      } else {
-        const errorData = await response.json();
-        setMessage(errorData.message || "Failed to add trip");
-      }
-    } catch (error) {
-      console.error("Error during fetch:", error);
-      setMessage("Network error: Failed to add trip");
-    }
+  e.preventDefault();
+
+  const galleryImageUrls = galleryImages
+    .split(",")
+    .map((url) => url.trim())
+    .filter((url) => url);
+
+  const tripData = {
+    country,
+    airport,
+    hotel,
+    galleryImages: galleryImageUrls
   };
-  
+
+  try {
+    const response = await fetch("http://localhost:8080/api/v1/trips", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(tripData)
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      setMessage("Trip added successfully");
+      setCountry("");
+      setAirport("");
+      setHotel("");
+      setGalleryImages("");
+    } else {
+      const errorData = await response.json();
+      setMessage(errorData.message || "Failed to add trip");
+    }
+  } catch (error) {
+    console.error("Error during fetch:", error);
+    setMessage("Network error: Failed to add trip");
+  }
+};
+
 
   return (
     <div className="container">
