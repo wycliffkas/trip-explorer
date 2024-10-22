@@ -14,8 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class TripController {
-    private TripService tripService;
-
+    private final TripService tripService;
     @GetMapping
     public ResponseEntity<?>getAllTrips(){
         List<TripResponse> tripResponseList = tripService.findAll();
@@ -31,7 +30,6 @@ public class TripController {
     public ResponseEntity<?> createTrips(@RequestBody CreateTripRequest tripRequest){
         TripResponse tripResponse = tripService.createTrip(tripRequest);
         return new ResponseEntity<>(tripResponse, HttpStatus.CREATED);
-
     }
 
 

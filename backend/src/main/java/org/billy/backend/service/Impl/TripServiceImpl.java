@@ -35,7 +35,8 @@ public class TripServiceImpl implements TripService {
         trip.setHotel(tripRequest.getHotel());
         trip.setGallery(tripRequest.getGallery());
         trip.setCountry(tripRequest.getCountry());
-        trip.setAirport(trip.getAirport());
+        trip.setAirport(tripRequest.getAirport());
+        trip = tripRepository.save(trip);
         return TripResponse.from(trip);
     }
 }
