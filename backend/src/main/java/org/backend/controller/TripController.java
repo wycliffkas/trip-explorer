@@ -1,9 +1,9 @@
-package org.billy.backend.controller;
+package org.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.billy.backend.dto.request.CreateTripRequest;
-import org.billy.backend.dto.response.TripResponse;
-import org.billy.backend.service.TripService;
+import org.backend.service.TripService;
+import org.backend.dto.request.CreateTripRequest;
+import org.backend.dto.response.TripResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

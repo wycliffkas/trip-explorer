@@ -1,8 +1,8 @@
-package org.billy.backend.dto.request;
+package org.backend.dto.request;
 
 import jakarta.persistence.OneToMany;
 import lombok.Data;
-import org.billy.backend.domain.Gallery;
+import org.backend.domain.Gallery;
 
 import java.util.List;
 

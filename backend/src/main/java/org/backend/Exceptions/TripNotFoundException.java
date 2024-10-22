@@ -1,4 +1,4 @@
-package org.billy.backend.Exceptions;
+package org.backend.Exceptions;
 
 public class TripNotFoundException extends RuntimeException{
     public TripNotFoundException() {

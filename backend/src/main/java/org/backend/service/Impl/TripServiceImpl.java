@@ -1,11 +1,11 @@
-package org.billy.backend.service.Impl;
+package org.backend.service.Impl;
 
-import org.billy.backend.Exceptions.TripNotFoundException;
-import org.billy.backend.domain.Trip;
-import org.billy.backend.dto.request.CreateTripRequest;
-import org.billy.backend.dto.response.TripResponse;
-import org.billy.backend.repository.TripRepository;
-import org.billy.backend.service.TripService;
+import org.backend.Exceptions.TripNotFoundException;
+import org.backend.repository.TripRepository;
+import org.backend.service.TripService;
+import org.backend.domain.Trip;
+import org.backend.dto.request.CreateTripRequest;
+import org.backend.dto.response.TripResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

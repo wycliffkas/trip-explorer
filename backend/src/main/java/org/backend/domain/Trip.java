@@ -1,4 +1,4 @@
-package org.billy.backend.domain;
+package org.backend.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
