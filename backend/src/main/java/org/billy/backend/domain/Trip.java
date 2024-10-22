@@ -20,7 +20,7 @@ public class Trip {
     private String country;
     private String airport;
     private String hotel;
-    @OneToMany(mappedBy = "gallery")
+    @OneToMany(mappedBy = "trip")
     private List<Gallery> gallery;
 
 }
