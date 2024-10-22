@@ -19,7 +19,8 @@ const TripDetails = ({ isLoggedIn }) => {
           const tripData = await response.json();
           setTrip(tripData);
         } else {
-          console.error("Failed to fetch trip details");
+          const errorText = await response.text();
+          console.error("Failed to fetch trip details:", errorText);
         }
       } catch (error) {
         console.error("Error fetching trip data:", error);
@@ -45,9 +46,15 @@ const TripDetails = ({ isLoggedIn }) => {
           alert("Trip deleted successfully.");
           navigate("/");
         } else {
-          const data = await response.json();
-          console.error("Error deleting trip:", data.message);
-          alert("Failed to delete trip: " + data.message);
+          let errorMessage = "Failed to delete trip.";
+          if (response.status === 404) {
+            errorMessage = "Trip not found.";
+          } else {
+            const errorText = await response.text();
+            errorMessage += ` ${errorText}`;
+          }
+          console.error("Error deleting trip:", errorMessage);
+          alert(errorMessage);
         }
       } catch (error) {
         console.error("Error deleting trip:", error);
