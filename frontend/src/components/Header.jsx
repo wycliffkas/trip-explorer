@@ -5,7 +5,7 @@ import {Box, Typography} from "@mui/material";
 const Header = ({isLoggedIn, username}) => {
     const handleLogout = () => {
         localStorage.removeItem("token");
-        window.location.reload(); // Refresh to reflect changes
+        window.location.reload();
     };
 
     return (
