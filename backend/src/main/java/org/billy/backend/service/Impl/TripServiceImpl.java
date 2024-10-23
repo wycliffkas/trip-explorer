@@ -1,7 +1,7 @@
 package org.billy.backend.service.Impl;
 
-import org.billy.backend.Exceptions.TripNotFoundException;
 import org.billy.backend.domain.Trip;
+import org.billy.backend.Exceptions.TripNotFoundException;
 import org.billy.backend.dto.request.CreateTripRequest;
 import org.billy.backend.dto.response.TripResponse;
 import org.billy.backend.repository.TripRepository;
