@@ -34,7 +34,7 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
             User user = (User) authentication.getPrincipal();
             String token = jwtTokenUtil.generateToken(user);
-            return ResponseEntity.ok(new AuthResponse(token, user.getEmail(), user.getName()));
+            return ResponseEntity.ok(new AuthResponse(token, user.getUsername(), user.getName()));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

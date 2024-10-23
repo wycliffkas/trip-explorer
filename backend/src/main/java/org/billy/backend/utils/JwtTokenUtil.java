@@ -25,7 +25,7 @@ public class JwtTokenUtil {
 
     public String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(user.getId() + "," + user.getEmail() + "," + user.getRole())
+                .setSubject(user.getId() + "," + user.getUsername() + "," + user.getRole())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .setIssuer("MIU")
