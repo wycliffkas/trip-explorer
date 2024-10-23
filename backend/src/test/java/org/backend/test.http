@@ -1,3 +1,27 @@
 GET http://localhost:8080/api/v1/trips/5
 Content-Type: application/json
 
+### Signup: Register a New User
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "email": "testuser@gmail.com",
+  "password": "password123",
+  "role": "Admin",
+  "name": "test"
+}
+
+### Signin: Authenticate the User and Get JWT Token
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "testuser@gmail.com",
+  "password": "password123"
+}
+
+###
+GET http://localhost:8080/api/v1/trips
+#Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLHRlc3R1c2VyQGdtYWlsLmNvbSxBZG1pbiIsImlhdCI6MTcyOTY5NjY4MywiZXhwIjoxNzI5Njk2ODYzLCJpc3MiOiJNSVUifQ.OGt941JF3zqLuY3SH0JNcy5pi1DOSfXGgOJ2Otx1cPs
+
