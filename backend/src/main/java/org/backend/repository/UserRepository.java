@@ -1,6 +1,6 @@
-package org.billy.backend.repository;
+package org.backend.repository;
 
-import org.billy.backend.domain.User;
+import org.backend.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

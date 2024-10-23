@@ -1,9 +1,9 @@
-package org.billy.backend.service.Impl;
+package org.backend.service.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.billy.backend.domain.User;
-import org.billy.backend.dto.request.SignupRequest;
-import org.billy.backend.repository.UserRepository;
+import org.backend.domain.User;
+import org.backend.dto.request.SignupRequest;
+import org.backend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

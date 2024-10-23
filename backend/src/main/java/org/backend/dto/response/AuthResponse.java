@@ -1,4 +1,4 @@
-package org.billy.backend.dto.response;
+package org.backend.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

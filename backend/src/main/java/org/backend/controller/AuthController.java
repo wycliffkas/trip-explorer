@@ -1,12 +1,12 @@
-package org.billy.backend.controller;
+package org.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.billy.backend.domain.User;
-import org.billy.backend.dto.request.AuthRequest;
-import org.billy.backend.dto.request.SignupRequest;
-import org.billy.backend.dto.response.AuthResponse;
-import org.billy.backend.service.Impl.UserService;
-import org.billy.backend.utils.JwtTokenUtil;
+import org.backend.domain.User;
+import org.backend.dto.request.AuthRequest;
+import org.backend.dto.request.SignupRequest;
+import org.backend.dto.response.AuthResponse;
+import org.backend.service.Impl.UserService;
+import org.backend.utils.JwtTokenUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

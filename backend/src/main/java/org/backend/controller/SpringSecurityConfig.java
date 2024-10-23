@@ -1,8 +1,8 @@
-package org.billy.backend.config;
+package org.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.billy.backend.filters.JwtRequestFilter;
-import org.billy.backend.service.Impl.CustomUserDetailsService;
+import org.backend.filters.JwtRequestFilter;
+import org.backend.service.Impl.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

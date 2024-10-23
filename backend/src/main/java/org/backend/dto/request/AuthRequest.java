@@ -1,6 +1,5 @@
-package org.billy.backend.dto.request;
+package org.backend.dto.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

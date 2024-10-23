@@ -1,7 +1,7 @@
-package org.billy.backend.service.Impl;
+package org.backend.service.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.billy.backend.repository.UserRepository;
+import org.backend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
