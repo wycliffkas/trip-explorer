@@ -47,7 +47,7 @@ const AddTrip = () => {
       hotel
     };
 
-    const response = await fetch("http://localhost:4000/trips", {
+    const response = await fetch("http://localhost:4000/api/v1/trips", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

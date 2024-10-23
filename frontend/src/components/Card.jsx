@@ -8,6 +8,7 @@ import {
 import defaultImage from "../images/default.png";
 
 const CardItem = ({ country, gallery }) => {
+  console.log("country", country)
   const imageUrl = gallery && gallery.length > 0 ? gallery[0].url : defaultImage;
 
   return (

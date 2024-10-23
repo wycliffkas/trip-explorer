@@ -11,9 +11,10 @@ const Home = () => {
   useEffect(() => {
     const getTrips = async () => {
       setIsLoading(true);
-      const response = await fetch("http://localhost:4000/trips");
+      const response = await fetch("http://localhost:4000/api/v1/trips");
       const trips = await response.json();
-      setTrips(trips.data);
+      setTrips(trips);
+
       setIsLoading(false);
     };
 
@@ -28,7 +29,8 @@ const Home = () => {
 
   return (
     <Box display="flex" flexWrap="wrap" gap={3} m={3} className="container">
-      {trips.map((trip) => (
+
+      {trips?.map((trip) => (
         <Box key={trip.id} onClick={() => handleCardClick(trip.id)}>
           <Card country={trip?.country} gallery={trip?.gallery} />
         </Box>
