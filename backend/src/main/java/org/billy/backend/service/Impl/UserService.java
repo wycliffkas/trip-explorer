@@ -15,9 +15,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public void registerUser(SignupRequest request) {
-        // Check if the email already exists
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("Email already in use");
+            throw new IllegalArgumentException("Username already in use");
         }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
@@ -25,7 +24,7 @@ public class UserService {
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(encodedPassword);
-        user.setRole(request.getRole());
+        user.setRole("Admin");
         user.setName(request.getName());
 
         userRepository.save(user);
