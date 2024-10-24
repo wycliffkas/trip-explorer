@@ -1,4 +1,4 @@
-package org.backend.controller;
+package org.backend.config;
 
 import lombok.RequiredArgsConstructor;
 import org.backend.filters.JwtRequestFilter;

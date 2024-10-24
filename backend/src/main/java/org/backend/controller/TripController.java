@@ -27,7 +27,7 @@ public class TripController {
         return new ResponseEntity<>(tripResponse, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('Admin')")
+    // @PreAuthorize("hasRole('Admin')")
     @PostMapping
     public ResponseEntity<?> createTrips(@RequestBody CreateTripRequest tripRequest){
         TripResponse tripResponse = tripService.createTrip(tripRequest);
