@@ -1,33 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Card from "../components/Card";
+import { useDispatch, useSelector } from "react-redux";
+
+import { fetchTrips } from "../features/trips/tripsSlice";
 
 const Home = () => {
-  const [trips, setTrips] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getTrips = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch("http://localhost:4000/api/v1/trips");
-        if (response.ok) {
-          const tripsData = await response.json();
-          setTrips(tripsData); 
-        } else {
-          console.error("Failed to fetch trips");
-        }
-      } catch (error) {
-        console.error("Error fetching trips:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const { trips, isLoading, error } = useSelector((state) => state.trips);
 
-    getTrips();
-  }, []);
+  useEffect(() => {
+    dispatch(fetchTrips());
+  }, [dispatch]);
 
   const handleCardClick = (tripId) => {
     navigate(`/trip/${tripId}`);
@@ -35,9 +22,10 @@ const Home = () => {
 
   if (isLoading) return <div>Loading trips...</div>;
 
+  if (error) return <div>Error fetching trips..</div>;
+
   return (
     <Box display="flex" flexWrap="wrap" gap={3} m={3} className="container">
-
       {trips?.map((trip) => (
         <Box key={trip.id} onClick={() => handleCardClick(trip.id)}>
           <Card country={trip.country} galleryImages={trip.galleryImages} />

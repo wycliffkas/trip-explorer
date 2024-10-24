@@ -8,6 +8,7 @@ import {
   MenuItem,
   Paper
 } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const countries = [
   "Austria",
@@ -35,55 +36,53 @@ const AddTrip = () => {
   const [galleryImages, setGalleryImages] = useState("");
   const [message, setMessage] = useState("");
 
+  const token = useSelector((state) => state.auth.token);
+
   const handleCountryChange = (e) => {
     const selectedCountry = e.target.value;
     setCountry(selectedCountry);
   };
 
   const handleAddTrip = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const galleryImageUrls = galleryImages
-    .split(",")
-    .map((url) => url.trim())
-    .filter((url) => url);
+    const galleryImageUrls = galleryImages
+      .split(",")
+      .map((url) => url.trim())
+      .filter((url) => url);
 
-  const tripData = {
-    country,
-    airport,
-    hotel,
-    galleryImages: galleryImageUrls
-  };
+    const tripData = {
+      country,
+      airport,
+      hotel,
+      galleryImages: galleryImageUrls
+    };
 
-  const token = localStorage.getItem("token");
+    try {
+      const response = await fetch("http://localhost:4000/api/v1/trips", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(tripData)
+      });
 
-  try {
-    const response = await fetch("http://localhost:4000/api/v1/trips", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(tripData)
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      setMessage("Trip added successfully");
-      setCountry("");
-      setAirport("");
-      setHotel("");
-      setGalleryImages("");
-    } else {
-      const errorData = await response.json();
-      setMessage(errorData.message || "Failed to add trip");
+      if (response.ok) {
+        setMessage("Trip added successfully");
+        setCountry("");
+        setAirport("");
+        setHotel("");
+        setGalleryImages("");
+      } else {
+        const errorData = await response.json();
+        setMessage(errorData.message || "Failed to add trip");
+      }
+    } catch (error) {
+      console.error("Error during fetch:", error);
+      setMessage("Network error: Failed to add trip");
     }
-  } catch (error) {
-    console.error("Error during fetch:", error);
-    setMessage("Network error: Failed to add trip");
-  }
-};
-
+  };
 
   return (
     <div className="container">

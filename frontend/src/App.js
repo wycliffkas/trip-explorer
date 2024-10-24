@@ -1,5 +1,7 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import Home from "./pages/Home";
 import TripDetails from "./pages/TripDetails";
 import Header from "./components/Header";
@@ -12,42 +14,21 @@ import { useState, useEffect } from "react";
 import PrivateRoute from "./components/PrivateRoute";
 import "./components/Header.css";
 import AddGallery from "./pages/AddGallery";
-import useSession from "./components/useSession"; // Import the custom hook
 
 function App() {
-  // Manage login state in App component
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useSession(isLoggedIn, setIsLoggedIn); // Use the custom hook
+  const token = useSelector((state) => state.auth.token);
 
-  const [username, setName] = useState(localStorage.getItem("username"));
-
-  // Check if the user is logged in when the app loads
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    console.log(token);
-    const savedName = localStorage.getItem("name");
-    if (token && savedName) {
+    if (token) {
       setIsLoggedIn(true);
-      setName(savedName);
     }
-  }, []);
-
-  // Handle logout
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    setIsLoggedIn(false);
-    setName("");
-  };
+  }, [token]);
 
   return (
     <>
-      <Header
-        isLoggedIn={isLoggedIn}
-        handleLogout={handleLogout}
-        username={username}
-      />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -64,12 +45,7 @@ function App() {
         />
 
         {/* Public Routes */}
-        <Route
-          path="/login"
-          element={
-            <Login setIsLoggedIn={setIsLoggedIn} setName={setName} />
-          }
-        />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
         {/* Protected Routes */}
