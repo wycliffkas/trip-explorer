@@ -14,7 +14,7 @@ const TripDetails = ({ isLoggedIn }) => {
     const getTrip = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/trips/${tripId}`);
+        const response = await fetch(`http://localhost:4000/api/v1/trips/${tripId}`);
         if (response.ok) {
           const tripData = await response.json();
           setTrip(tripData);
@@ -38,7 +38,7 @@ const TripDetails = ({ isLoggedIn }) => {
   const handleDeleteTrip = async () => {
     if (window.confirm("Are you sure you want to delete this trip?")) {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/trips/${tripId}`, {
+        const response = await fetch(`http://localhost:4000/api/v1/trips/${tripId}`, {
           method: "DELETE",
         });
 

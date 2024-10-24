@@ -12,7 +12,7 @@ const Home = () => {
     const getTrips = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("http://localhost:8080/api/v1/trips");
+        const response = await fetch("http://localhost:4000/api/v1/trips");
         if (response.ok) {
           const tripsData = await response.json();
           setTrips(tripsData); 
@@ -37,7 +37,8 @@ const Home = () => {
 
   return (
     <Box display="flex" flexWrap="wrap" gap={3} m={3} className="container">
-      {trips.map((trip) => (
+
+      {trips?.map((trip) => (
         <Box key={trip.id} onClick={() => handleCardClick(trip.id)}>
           <Card country={trip.country} galleryImages={trip.galleryImages} />
         </Box>
