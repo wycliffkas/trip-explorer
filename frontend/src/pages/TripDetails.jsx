@@ -1,36 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { findTripById, removeTrip } from "../features/trips/tripsSlice";
+
 import "./TripDetails.css";
 import defaultImage from "../images/default.png";
 
 const TripDetails = ({ isLoggedIn }) => {
   const { tripId } = useParams();
-  const [trip, setTrip] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const trip = useSelector((state) => state.trips.selectedTrip);
+  const isLoading = useSelector((state) => state.trips.isLoading);
 
   useEffect(() => {
-    const getTrip = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(`http://localhost:4000/api/v1/trips/${tripId}`);
-        if (response.ok) {
-          const tripData = await response.json();
-          setTrip(tripData);
-        } else {
-          const errorText = await response.text();
-          console.error("Failed to fetch trip details:", errorText);
-        }
-      } catch (error) {
-        console.error("Error fetching trip data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getTrip();
-  }, [tripId]);
+    dispatch(findTripById(parseInt(tripId)));
+  }, [dispatch, tripId]);
 
   const imageUrl =
     trip?.galleryImages?.length > 0 ? trip.galleryImages[0] : defaultImage;
@@ -38,12 +25,16 @@ const TripDetails = ({ isLoggedIn }) => {
   const handleDeleteTrip = async () => {
     if (window.confirm("Are you sure you want to delete this trip?")) {
       try {
-        const response = await fetch(`http://localhost:4000/api/v1/trips/${tripId}`, {
-          method: "DELETE",
-        });
+        const response = await fetch(
+          `http://localhost:4000/api/v1/trips/${tripId}`,
+          {
+            method: "DELETE"
+          }
+        );
 
         if (response.ok) {
           alert("Trip deleted successfully.");
+          dispatch(removeTrip(parseInt(tripId)));
           navigate("/");
         } else {
           let errorMessage = "Failed to delete trip.";
@@ -58,7 +49,6 @@ const TripDetails = ({ isLoggedIn }) => {
         }
       } catch (error) {
         console.error("Error deleting trip:", error);
-        alert("An error occurred while deleting the trip.");
       }
     }
   };
@@ -89,13 +79,12 @@ const TripDetails = ({ isLoggedIn }) => {
           </p>
 
           {isLoggedIn && (
-            <div style={{ marginTop: '16px' }}>
+            <div style={{ marginTop: "16px" }}>
               <Button
                 variant="contained"
                 color="error"
                 onClick={handleDeleteTrip}
-                sx={{ mt: 2 }}
-              >
+                sx={{ mt: 2 }}>
                 Delete Trip
               </Button>
             </div>
@@ -109,7 +98,7 @@ const TripDetails = ({ isLoggedIn }) => {
             <img
               key={index}
               src={url || defaultImage}
-              alt={`Gallery Image ${index + 1}`}
+              alt={`Gallery ${index + 1}`}
               width={300}
               height={200}
             />

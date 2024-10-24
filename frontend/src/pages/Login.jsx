@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Box, Typography, Paper, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-const Login = ({ setIsLoggedIn, setName }) => {
+import { setCredentials } from "../features/auth/authSlice";
+
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -26,11 +30,7 @@ const Login = ({ setIsLoggedIn, setName }) => {
       if (response.ok) {
         setMessage("Login successful");
         setIsSuccess(true);
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("loginTime", Date.now());
-        localStorage.setItem("name", data.name);
-        setIsLoggedIn(true);
-        setName(data.name);
+        dispatch(setCredentials({ token: data.token, username: data.name }));
         navigate("/");
       } else {
         setMessage(data.message || "Login failed");
